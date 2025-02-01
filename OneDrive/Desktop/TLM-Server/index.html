@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .result-item {
+            margin-bottom: 20px;
+        }
+        .result-item h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .result-item p {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Web Search</h1>
+    <form id="searchForm">
+        <input type="text" id="query" placeholder="Enter search term..." required>
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="errorMessage" style="color: red;"></div>
+
+    <div id="results" class="result"></div>
+</div>
+
+<script>
+    document.getElementById('searchForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const query = document.getElementById('query').value;
+
+        // Clear any previous results
+        document.getElementById('results').innerHTML = '';
+        document.getElementById('errorMessage').innerHTML = '';
+
+        // Fetch search results from Flask API
+        fetch(`https://b978747b-0cfa-4ac8-aa74-e01288e8d3c1-00-2tmnjhgcuv5r3.pike.replit.dev/search?query=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('errorMessage').textContent = data.error;
+                } else {
+                    const resultsDiv = document.getElementById('results');
+                    data.results.forEach(result => {
+                        const resultItem = document.createElement('div');
+                        resultItem.classList.add('result-item');
+                        resultItem.innerHTML = `
+                            <h2><a href="${result.link}" target="_blank">${result.title}</a></h2>
+                            <p>${result.snippet}</p>
+                        `;
+                        resultsDiv.appendChild(resultItem);
+                    });
+                }
+            })
+            .catch(error => {
+                document.getElementById('errorMessage').textContent = 'Error fetching search results';
+                console.error('Error:', error);
+            });
+    });
+</script>
+
+</body>
+</html>
