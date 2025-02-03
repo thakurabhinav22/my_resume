@@ -1,0 +1,63 @@
+{
+  "admin": {
+    "nGqjgrZkivSrNsTfW5l2X1YLJlw1": {
+      "Email": "admin@gmail.com",
+      "isAdmin": true,
+      "Role": "Admin",
+      "Name": "Abhinav Admin",
+      "Institute": "Ves Polytechnic",
+      "Orgination": "institute",
+      "canAddMember": true
+    }
+  },
+  "user": {
+    "QAjisUMECPPwrmLCc5UvIaz6iJC3": {
+      "Branch": "Computer Science",
+      "College": "Ves Polytechnic",
+      "Name": "Abhinav",
+      "Surname": "Thakur",
+      "email": "abhinavthakurv@gmail.com",
+      "isAdmin": false
+    },
+    "TokAaDDqi9ME1XNLPdHM4Q17ah22": {
+      "Branch": "Computer Science",
+      "College": "",
+      "Name": "Abhinav",
+      "Surname": "Thakur",
+      "email": "abhinavthakurv22@gmail.com",
+      "isAdmin": false
+    },
+    "V8JJUljW05W3HoqgwkSOoQGOoQf1": {
+      "Branch": "Computer Science",
+      "College": "",
+      "Name": "aa",
+      "Surname": "aa",
+      "email": "aa@gmail.com",
+      "isAdmin": false
+    },
+    "dqO14UtE6UZlhLOj3GRypnRgApf1": {
+      "Branch": "Computer Science",
+      "College": "",
+      "Name": "aa",
+      "Surname": "aa",
+      "email": "aaa@gmail.com",
+      "isAdmin": false
+    },
+    "nIElvGROCIbSkSuVmdGPwz8DZyE3": {
+      "Branch": "Computer Science",
+      "College": "Ves Polytechnic",
+      "Name": "Abhinav",
+      "Surname": "Thakur",
+      "email": "co2022.abhinav.thakur@ves.ac.in",
+      "isAdmin": false
+    },
+    "uT6VRHkjgxc9dapQHmPBqoHTIy73": {
+      "Branch": "Computer Science",
+      "College": "",
+      "Name": "Dummy",
+      "Surname": "Account",
+      "email": "dummy@gmail.com",
+      "isAdmin": false
+    }
+  }
+}
