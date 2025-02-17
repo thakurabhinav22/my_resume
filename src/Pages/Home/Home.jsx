@@ -189,7 +189,7 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="languages-container">
+                {/* <div className="languages-container">
                     <h2 className="languages-header">Programming Languages & Skills</h2>
                     <div className="languages-grid">
                         {languages.map((lang, index) => (
@@ -211,9 +211,9 @@ export default function Home() {
                                 </div>
                             </div>
                         ))}
-                    </div>
+                    </div> */}
 
-                </div>
+                {/* </div> */}
             </section>
 
             {/* Projcts */}
