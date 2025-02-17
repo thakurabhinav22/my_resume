@@ -6,7 +6,6 @@ import darkbackground from "../../assets/images/blackBackground.svg"
 import github_icon from "../../assets/images/github.svg";
 import lander_video from '../../assets/videos/lander_view.webm';
 import profile_image from "../../assets/images/dev.png";
-import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaJava, FaPython, FaCar, FaBook, FaMoneyBill, FaWpforms } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import "react-circular-progressbar/dist/styles.css";
@@ -35,32 +34,32 @@ export default function Home() {
         { title: "College (B.Tech / B.E.)", percentage: 85 },
     ];
 
-    const projects = [
-        {
-            title: "DriveSmart",
-            description: "Real-time driving behavior analysis and feedback.",
-            icon: <FaCar className="project-icon" />,
-            link: "/drivesmart",
-        },
-        {
-            title: "CourseCreator",
-            description: "Platform for creating and managing online courses.",
-            icon: <FaBook className="project-icon" />,
-            link: "/coursecreator",
-        },
-        {
-            title: "UPI Payment App",
-            description: "Seamless UPI payments with Firebase integration.",
-            icon: <FaMoneyBill className="project-icon" />,
-            link: "/upi-payment",
-        },
-        {
-            title: "Form App",
-            description: "A smart form management system with validation.",
-            icon: <FaWpforms className="project-icon" />,
-            link: "/form-app",
-        },
-    ];
+    // const projects = [
+    //     {
+    //         title: "DriveSmart",
+    //         description: "Real-time driving behavior analysis and feedback.",
+    //         icon: <FaCar className="project-icon" />,
+    //         link: "/drivesmart",
+    //     },
+    //     {
+    //         title: "CourseCreator",
+    //         description: "Platform for creating and managing online courses.",
+    //         icon: <FaBook className="project-icon" />,
+    //         link: "/coursecreator",
+    //     },
+    //     {
+    //         title: "UPI Payment App",
+    //         description: "Seamless UPI payments with Firebase integration.",
+    //         icon: <FaMoneyBill className="project-icon" />,
+    //         link: "/upi-payment",
+    //     },
+    //     {
+    //         title: "Form App",
+    //         description: "A smart form management system with validation.",
+    //         icon: <FaWpforms className="project-icon" />,
+    //         link: "/form-app",
+    //     },
+    // ];
 
 
     const ProgressBar = ({ value }) => (
@@ -218,7 +217,7 @@ export default function Home() {
             </section>
 
             {/* Projcts */}
-            <section className="projects-container" id="projects">
+            {/* <section className="projects-container" id="projects">
                 <h1 className="projects-title">Here are the features we're proud of</h1>
                 <div className="projects-grid">
                     {projects.map((project, index) => (
@@ -235,7 +234,7 @@ export default function Home() {
                         </div>
                     ))}
                 </div>
-            </section>
+            </section> */}
 
 
         </div>
