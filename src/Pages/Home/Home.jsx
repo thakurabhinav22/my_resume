@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import "react-circular-progressbar/dist/styles.css";
 import menu_icon from "../../assets/images/menu.svg"
-import { FaHome, FaUser, FaGraduationCap, FaProjectDiagram } from 'react-icons/fa';
+import { FaHome, FaUser, FaGraduationCap, FaProjectDiagram,FaInstagram, FaEnvelope, FaGithub, FaLinkedin, FaTwitter} from 'react-icons/fa';
 
 export default function Home() {
     const navigate = useNavigate();
@@ -91,7 +91,7 @@ export default function Home() {
         return () => timers.forEach((timer) => clearTimeout(timer));
     }, []);
     return (
-        <div id="home"className='home-container'>
+        <div id="home" className='home-container'>
             <img className="home-intro-lander-img" src={background} alt="Background" />
             <nav className="home-nav">
                 <h2 className="nav-logo">Abhinav Thakur</h2>
@@ -102,6 +102,7 @@ export default function Home() {
                     <li><a href="#about">About Me</a></li>
                     <li><a href="#edu">Education</a></li>
                     <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact </a></li>
                 </ul>
 
                 {/* GitHub Button */}
@@ -274,6 +275,29 @@ export default function Home() {
                     ))}
                 </div>
             </section> */}
+
+            <footer id="contact"className="footer">
+                <div className="social-icons">
+                    <a href="https://www.instagram.com/abhi9av_thakur" target="_blank" rel="noopener noreferrer">
+                        <FaInstagram />
+                    </a>
+                    <a href="mailto:abhinavthakurv22@gmail.com" target="_blank" rel="noopener noreferrer">
+                        <FaEnvelope />
+                    </a>
+                    <a href="https://github.com/thakurabhinav22" target="_blank" rel="noopener noreferrer">
+                        <FaGithub />
+                    </a>
+                    <a href="https://www.linkedin.com/in/thakurabhinav22" target="_blank" rel="noopener noreferrer">
+                        <FaLinkedin />
+                    </a>
+                    <a href="https://x.com/thakurabhinav22" target="_blank" rel="noopener noreferrer">
+                        <FaTwitter />
+                    </a>
+                </div>
+
+                <div className="visit-counter">Visits: 0</div>
+                <div className="made-by">Made by Abhinav with ❤️</div>
+            </footer>
 
 
         </div>

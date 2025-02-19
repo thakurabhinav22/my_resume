@@ -166,7 +166,60 @@ body {
     mix-blend-mode: screen;
     background: transparent;
 }
+/* Fotter */
 
+.footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 24px;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    color: #00d4ff;
+    transform: scale(1.1);
+}
+
+.visit-counter {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.made-by {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .footer{
+        padding-bottom: 100px;
+    }
+    .social-icons {
+        gap: 15px;
+    }
+    
+    .social-icons a {
+        font-size: 20px;
+    }
+
+    .visit-counter, .made-by {
+        font-size: 13px;
+    }
+}
 /* Responsive Design */
 @media (max-width: 1024px) {
     .lander-view {
