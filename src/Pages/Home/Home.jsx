@@ -91,14 +91,14 @@ export default function Home() {
         return () => timers.forEach((timer) => clearTimeout(timer));
     }, []);
     return (
-        <div className='home-container'>
+        <div id="home"className='home-container'>
             <img className="home-intro-lander-img" src={background} alt="Background" />
             <nav className="home-nav">
                 <h2 className="nav-logo">Abhinav Thakur</h2>
 
                 {/* Desktop Nav Links */}
                 <ul className="nav-links">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="#home">Home</a></li>
                     <li><a href="#about">About Me</a></li>
                     <li><a href="#edu">Education</a></li>
                     <li><a href="#projects">Projects</a></li>
@@ -113,37 +113,37 @@ export default function Home() {
                 </div>
 
             </nav>
-<div className="bottom-nav">
+            <div className="bottom-nav">
 
-            <div className="bottom-nav active">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <FaHome className="nav-icon" /> {/* Home icon */}
-                            <span>Home</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#about">
-                            <FaUser className="nav-icon" /> {/* About icon */}
-                            <span>About</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#edu">
-                            <FaGraduationCap className="nav-icon" /> {/* Education icon */}
-                            <span>Education</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#projects">
-                            <FaProjectDiagram className="nav-icon" /> {/* Projects icon */}
-                            <span>Projects</span>
-                        </a>
-                    </li>
-                </ul>
+                <div className="bottom-nav active">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <FaHome className="nav-icon" /> {/* Home icon */}
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#about">
+                                <FaUser className="nav-icon" /> {/* About icon */}
+                                <span>About</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#edu">
+                                <FaGraduationCap className="nav-icon" /> {/* Education icon */}
+                                <span>Education</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#projects">
+                                <FaProjectDiagram className="nav-icon" /> {/* Projects icon */}
+                                <span>Projects</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-</div>
 
             <main className='lander-view'>
                 <div className="lander-text">
