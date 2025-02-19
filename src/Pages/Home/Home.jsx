@@ -9,9 +9,12 @@ import profile_image from "../../assets/images/dev.png";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import "react-circular-progressbar/dist/styles.css";
+import menu_icon from "../../assets/images/menu.svg"
+import { FaHome, FaUser, FaGraduationCap, FaProjectDiagram } from 'react-icons/fa';
 
 export default function Home() {
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
     const languages = [
         { name: "C", progress: 80, icon: "🔵", color: "#39ff14" }, // Neon Green
         { name: "C++", progress: 88, icon: "🟦", color: "#00ffff" }, // Cyan
@@ -90,21 +93,57 @@ export default function Home() {
     return (
         <div className='home-container'>
             <img className="home-intro-lander-img" src={background} alt="Background" />
-            <nav className='home-nav'>
+            <nav className="home-nav">
                 <h2 className="nav-logo">Abhinav Thakur</h2>
+
+                {/* Desktop Nav Links */}
                 <ul className="nav-links">
                     <li><a href="#">Home</a></li>
                     <li><a href="#about">About Me</a></li>
                     <li><a href="#edu">Education</a></li>
                     <li><a href="#projects">Projects</a></li>
                 </ul>
+
+                {/* GitHub Button */}
                 <div className="github-button-div">
                     <a href="https://github.com/thakurabhinav22" target="_blank" rel="noopener noreferrer" className="github-button">
                         <img src={github_icon} alt="GitHub" className="github-icon" />
                         Get In Touch
                     </a>
                 </div>
+
             </nav>
+<div className="bottom-nav">
+
+            <div className="bottom-nav active">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <FaHome className="nav-icon" /> {/* Home icon */}
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#about">
+                            <FaUser className="nav-icon" /> {/* About icon */}
+                            <span>About</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#edu">
+                            <FaGraduationCap className="nav-icon" /> {/* Education icon */}
+                            <span>Education</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#projects">
+                            <FaProjectDiagram className="nav-icon" /> {/* Projects icon */}
+                            <span>Projects</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+</div>
 
             <main className='lander-view'>
                 <div className="lander-text">
@@ -211,9 +250,9 @@ export default function Home() {
                                 </div>
                             </div>
                         ))}
-                    </div> 
+                    </div>
 
-                 </div>
+                </div>
             </section>
 
             {/* Projcts */}
