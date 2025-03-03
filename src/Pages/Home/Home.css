@@ -1131,3 +1131,420 @@ body {
     }
 }
 
+
+
+
+/* Reset some inherited styles */
+
+
+
+.projects-container {
+    padding: 60px 20px;
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    background-color: #000000;
+        
+   
+  }
+  
+  body {
+    --background-color: #000000;
+    --text-color: #B0B0B5;
+    --card-background-color: #1C1C1F;
+    --card-border-color: #2A2A2D;
+    --card-label-color: #FFFFFF;
+    --card-icon-color: #A0A0A5;
+    --card-icon-background-color: rgba(255, 255, 255, 0.05);
+    --card-hover-border-color: #1f1f1f;
+    --card-hover-icon-color: #ffffff;
+    --card-hover-background: #252528;
+  
+    background-color: var(--background-color);
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  }
+  
+  .projects-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--card-label-color);
+    text-align: center;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  
+  .projects-subtitle {
+    font-size: 1rem;
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 48px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .card {
+    background-color: var(--card-background-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: 10px;
+    padding: 20px;
+    transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .title-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--card-icon-background-color);
+    border-radius: 8px;
+  }
+  
+  .icon svg {
+    width: 24px;
+    height: 24px;
+    color: var(--card-icon-color);
+    transition: color 0.25s ease;
+  }
+  
+  .card h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--card-label-color);
+    margin: 0;
+    line-height: 1.2;
+  }
+  
+  .project-type {
+    font-size: 0.75rem;
+    color: var(--text-color);
+    font-weight: 400;
+    opacity: 0.8;
+  }
+  
+  .lock-icon {
+    width: 14px;
+    height: 14px;
+    color: #FF5555; /* Red for private status */
+    margin-left: 6px;
+  }
+  
+  .card-description {
+    font-size: 0.875rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  .card-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .tech-badge {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--text-color);
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 500;
+  }
+  
+  .card-links {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 12px;
+  }
+  
+  .card-links a,
+  .card-links button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  
+  .github-link {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--card-border-color);
+  }
+  
+  .github-link svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .details-btn {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--card-border-color);
+    cursor: pointer;
+  }
+  
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: var(--card-hover-border-color);
+    background-color: var(--card-hover-background);
+  }
+  
+  .card:hover .icon svg {
+    color: var(--card-hover-icon-color);
+  }
+  
+  .card-links a:hover,
+  .card-links button:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--card-hover-icon-color);
+    border-color: var(--card-hover-icon-color);
+  }
+  
+  .day-night {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    /* Keep existing styles */
+  }
+  
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .projects-title {
+      font-size: 1.75rem;
+    }
+  
+    .projects-subtitle {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Popup Overlay (Dark Theme, GitHub-like) */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 17, 23, 0.6); /* Dark semi-transparent */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+}
+
+/* Popup Content (GitHub Dark Style) */
+.popup-content {
+    background: #161b22; /* Dark GitHub background */
+    color: #e6edf3; /* Light text */
+    padding: 16px;
+    border-radius: 6px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    text-align: center;
+    animation: fadeIn 0.2s ease-in-out;
+    border: 1px solid #30363d; /* GitHub border color */
+}
+
+/* Popup Header */
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+/* Close Button (X) */
+.popup-close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #8b949e;
+    transition: color 0.2s;
+}
+
+.popup-close-btn:hover {
+    color: #f0f6fc; /* Lighter on hover */
+}
+
+/* Popup Overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 17, 23, 0.6); /* GitHub dark theme */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+}
+
+/* Popup Overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 17, 23, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+}
+
+/* Popup Content */
+.popup-content {
+    background: #161b22;
+    color: #e6edf3;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    width: 420px;
+    text-align: center;
+    animation: fadeIn 0.2s ease-in-out;
+    border: 1px solid #30363d;
+}
+
+/* Popup Header */
+.popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+/* Popup Title with Icon */
+.popup-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Warning Icon */
+.warning-icon {
+    color: #f39c12; /* Orange */
+    font-size: 22px;
+}
+
+/* Close Button */
+.popup-close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #8b949e;
+    transition: color 0.2s;
+}
+
+.popup-close-btn:hover {
+    color: #f0f6fc;
+}
+
+/* Message */
+.popup-message {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Button Container */
+.popup-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Close Button */
+.popup-btn-close {
+    background-color: #6e7681;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.popup-btn-close:hover {
+    background-color: #545d68;
+}
+
+/* Contact Button */
+.popup-btn-contact {
+    background-color: #00aeff;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s ease;
+}
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
