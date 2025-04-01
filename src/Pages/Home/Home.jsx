@@ -296,7 +296,7 @@ export default function Home() {
 
 
                                     <button className="details-btn" onClick={() => navigate(project.link)}>
-                                        More
+                                        Details
                                     </button>
                                 </div>
                             </div>
