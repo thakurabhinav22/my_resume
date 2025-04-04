@@ -62,9 +62,6 @@ export default function Home() {
     };
 
 
-
-
-
     const projects = [
         {
             title: "DriveSmart",
@@ -78,7 +75,7 @@ export default function Home() {
             isPublic: false
         },
         {
-            title: "Learn Max",
+            title: "IgnitEd",
             description: "Platform for creating and managing online courses with rich content and analytics.",
             icon: <MdMenuBook />,
             link: "/coursecreator",
@@ -86,13 +83,13 @@ export default function Home() {
             demo: "https://coursecreator-demo.com",
             github: "https://github.com/thakurabhinav22/coursecreator",
             type: "Android App",
-            isPublic: true
+            isPublic: false
         },
         {
             title: "Seacure Pay",
             description: "Seamless UPI payment solution with Firebase integration for secure transactions.",
             icon: <MdPayments />,
-            link: "/upi-payment",
+            link: "/securepay",
             tech: ["Java", "Firebase"],
             demo: "https://upi-payment-demo.com",
             github: "https://github.com/thakurabhinav22/upi-payment",
