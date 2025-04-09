@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
+import { db } from "./firebase"; // Adjust the path to your firebase.js file
+import { doc, getDoc, setDoc, runTransaction, increment } from "firebase/firestore"; // Added increment import
 import background from "../../assets/images/HomePageBack.svg";
 import darkbackground from "../../assets/images/blackBackground.svg";
 import github_icon from "../../assets/images/github.svg";
@@ -16,7 +18,7 @@ export default function Home() {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [progress, setProgress] = useState([0, 0, 0]);
-
+    const [visitCount, setVisitCount] = useState(0); // State for visit counter
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [popupMessage, setPopupMessage] = useState("");
 
@@ -40,39 +42,17 @@ export default function Home() {
         { title: "College (B.Tech / B.E.)", percentage: 85 },
     ];
 
-    useEffect(() => {
-        const timers = educationData.map((edu, index) =>
-            setTimeout(() => {
-                setProgress((prev) => {
-                    const newProgress = [...prev];
-                    newProgress[index] = edu.percentage;
-                    return newProgress;
-                });
-            }, index * 1000)
-        );
-        return () => timers.forEach((timer) => clearTimeout(timer));
-    }, []);
-
-
-    const handleClick = (e, project) => {
-        if (!project.isPublic) {
-            e.preventDefault();
-            setIsPopupOpen(true); // Show the warning popup
-        }
-    };
-
-
     const projects = [
         {
             title: "DriveSmart",
-            description: "A real-time driving behavior analysis and feedback system leveraging Mobile Senosrs and machine learning.",
+            description: "A real-time driving behavior analysis and feedback system leveraging Mobile Sensors and machine learning.",
             icon: <MdCarRental />,
             link: "/drivesmart",
             tech: ["Java", "Firebase", "TensorFlow"],
             demo: "https://drivesmart-demo.com",
             github: "https://github.com/thakurabhinav22/drivesmart",
             type: "Android App",
-            isPublic: false
+            isPublic: false,
         },
         {
             title: "IgnitEd",
@@ -83,7 +63,7 @@ export default function Home() {
             demo: "https://coursecreator-demo.com",
             github: "https://github.com/thakurabhinav22/coursecreator",
             type: "Android App",
-            isPublic: false
+            isPublic: false,
         },
         {
             title: "Seacure Pay",
@@ -94,22 +74,107 @@ export default function Home() {
             demo: "https://upi-payment-demo.com",
             github: "https://github.com/thakurabhinav22/upi-payment",
             type: "Android App",
-            isPublic: false
+            isPublic: false,
         },
         {
             title: "Musix",
             description: "A streamlined online music player delivering an ad-free listening experience with seamless playback functionality.",
-            icon: <MdMusicNote />, // Already correct
+            icon: <MdMusicNote />,
             link: "/form-app",
             tech: ["React-Js"],
             demo: "https://form-app-demo.com",
             github: "https://github.com/thakurabhinav22/form-app",
             type: "Android App",
-            isPublic: false
+            isPublic: false,
         },
     ];
 
+    // Function to update visit counter and fetch/store visitor data
+    const updateVisitCounter = async () => {
+        // Check session storage to prevent multiple updates in the same session
+        const hasUpdated = sessionStorage.getItem("hasUpdatedCounter");
+        if (hasUpdated) return;
+
+        try {
+            // Reference to the counter document in Firestore
+            const counterRef = doc(db, "visits", "counter");
+
+            // Use transaction to ensure atomic increment
+            await runTransaction(db, async (transaction) => {
+                const counterSnap = await transaction.get(counterRef);
+                let currentCount = 0;
+                if (counterSnap.exists()) {
+                    currentCount = counterSnap.data().count || 0;
+                } else {
+                    transaction.set(counterRef, { count: 0 });
+                }
+
+                // Set the current count in the UI
+                setVisitCount(currentCount);
+
+                // Increment the counter
+                transaction.update(counterRef, { count: increment(1) });
+
+                // Update the local state with the new count
+                setVisitCount((prevCount) => prevCount + 1);
+            });
+
+            // Fetch visitor data from ipinfo.io (free tier with HTTPS)
+            console.log("Fetching visitor data from ipinfo.io...");
+            const response = await fetch("https://ipinfo.io/json");
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const visitorData = await response.json();
+            console.log("Visitor data received:", visitorData);
+
+            // Extract data (ipinfo.io format differs slightly)
+            const timestamp = new Date().toISOString();
+            const ip = visitorData.ip; // IP address
+            const loc = visitorData.loc ? visitorData.loc.split(",") : [null, null]; // latitude, longitude
+            const lat = loc[0];
+            const lon = loc[1];
+            const countryCode = visitorData.country; // Country code
+
+            // Store visitor data in Firestore
+            console.log("Storing visitor data in Firestore:", { timestamp, ip, lat, lon, countryCode });
+            await setDoc(doc(db, "visitor_logs", `${timestamp}_${ip}`), {
+                timestamp,
+                ip,
+                latitude: lat,
+                longitude: lon,
+                countryCode,
+            });
+            console.log("Visitor data stored successfully.");
+        } catch (error) {
+            console.error("Error updating visit counter or storing visitor data:", error.message);
+            // Fallback: Store minimal data if API fails
+            const timestamp = new Date().toISOString();
+            await setDoc(doc(db, "visitor_logs", `${timestamp}_unknown`), {
+                timestamp,
+                ip: "unknown",
+                latitude: null,
+                longitude: null,
+                countryCode: "unknown",
+            });
+        }
+
+        // Mark as updated in session storage
+        sessionStorage.setItem("hasUpdatedCounter", "true");
+    };
+
+    // Handle project click for private projects
+    const handleClick = (e, project) => {
+        if (!project.isPublic) {
+            e.preventDefault();
+            setIsPopupOpen(true); // Show the warning popup
+        }
+    };
+
+    // Run visit counter update and education progress animation on mount
     useEffect(() => {
+        updateVisitCounter();
+
         const timers = educationData.map((edu, index) =>
             setTimeout(() => {
                 setProgress((prev) => {
@@ -121,7 +186,6 @@ export default function Home() {
         );
         return () => timers.forEach((timer) => clearTimeout(timer));
     }, []);
-
 
     return (
         <div id="home" className="home-container">
@@ -146,10 +210,10 @@ export default function Home() {
 
             <div className="bottom-nav">
                 <ul>
-                    <li><a href="#home"><FaHome className="nav-icon" /><span>Home</span></a></li>
-                    <li><a href="#about"><FaUser className="nav-icon" /><span>About</span></a></li>
-                    <li><a href="#edu"><FaGraduationCap className="nav-icon" /><span>Education</span></a></li>
-                    <li><a href="#projects"><FaProjectDiagram className="nav-icon" /><span>Projects</span></a></li>
+                    <li><a href="#home"><span><FaHome className="nav-icon" />Home</span></a></li>
+                    <li><a href="#about"><span><FaUser className="nav-icon" />About</span></a></li>
+                    <li><a href="#edu"><span><FaGraduationCap className="nav-icon" />Education</span></a></li>
+                    <li><a href="#projects"><span><FaProjectDiagram className="nav-icon" />Projects</span></a></li>
                 </ul>
             </div>
 
@@ -181,7 +245,7 @@ export default function Home() {
                         <p>When I am not coding, I enjoy experimenting with new technologies and playing games.</p>
                         <div className="let-code-buttons">
                             <a href="https://www.linkedin.com/in/thakurabhinav22" target="_blank" rel="noopener noreferrer" className="leetCode-btn">
-                                Linkedin Profile
+                                LinkedIn Profile
                             </a>
                         </div>
                     </div>
@@ -193,7 +257,7 @@ export default function Home() {
 
             <section className="education-container" id="edu">
                 <div className="education-background">
-                <img className="education-background-img" src={darkbackground} alt="Background" />
+                    <img className="education-background-img" src={darkbackground} alt="Background" />
                 </div>
                 <h1 className="education-title">Academic Background</h1>
                 <div className="education-content">
@@ -252,10 +316,6 @@ export default function Home() {
             </section>
 
             <section className="projects-container" id="projects">
-
-            {/* <img className="projetcs-background-img" src={darkbackground} alt="Background" /> */}
-
-
                 <h2 className="projects-title">Featured Projects</h2>
                 <p className="projects-subtitle">Discover my latest technical achievements and innovations.</p>
                 <div className="grid">
@@ -272,37 +332,23 @@ export default function Home() {
                                         <span key={techIndex} className="tech-badge">{tech}</span>
                                     ))}
                                 </div>
-
                                 <div className="card-links">
-
                                     <div className="source-code" onClick={(e) => handleClick(e, project)}>
-
                                         <a
-
-                                            href={project.isPublic ? project.github : "#"} // Fallback href
+                                            href={project.isPublic ? project.github : "#"}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="github-link"
                                         >
-
-
                                             <FaGithub /> Source
                                         </a>
                                     </div>
-
-
-
-                                    <button className="details-btn" onClick={() => navigate(project.link)}>
-                                        Details
-                                    </button>
                                 </div>
                             </div>
                         </div>
                     ))}
-
                 </div>
-
-            </section >
+            </section>
 
             <footer id="contact" className="footer">
                 <div className="social-icons">
@@ -312,9 +358,10 @@ export default function Home() {
                     <a href="https://www.linkedin.com/in/thakurabhinav22" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
                     <a href="https://x.com/thakurabhinav22" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
                 </div>
-                <div className="visit-counter">Visits: 0</div>
+                <div className="visit-counter">Visits: {visitCount}</div>
                 <div className="made-by">Made by Abhinav with ❤️</div>
             </footer>
+
             {isPopupOpen && (
                 <div className="popup-overlay">
                     <div className="popup-content">
@@ -325,25 +372,16 @@ export default function Home() {
                             </div>
                             <button className="popup-close-btn" onClick={() => setIsPopupOpen(false)}>✕</button>
                         </div>
-
                         <p className="popup-message">
                             You do not have permission to access this project. It is private. <br />
                             But you can still contact the developer for access.
                         </p>
-
                         <div className="popup-actions">
-                          
                             <a href="mailto:abhinavthakurv22@gmail.com" className="popup-btn-contact">Contact Developer</a>
                         </div>
                     </div>
                 </div>
             )}
-
-
         </div>
-
-
-
-
     );
 }
